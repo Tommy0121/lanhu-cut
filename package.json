@@ -6,10 +6,11 @@
   "author": "tommyxia",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack --config ./config/webpack.config.js --watch"
+    "dev": "webpack serve --config ./config/webpack.config.js"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.15",
+    "@types/chrome": "^0.0.248",
     "@types/react": "^18.2.29",
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
@@ -33,7 +34,9 @@
     "ts-loader": "^9.5.0",
     "typescript": "*",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-middleware": "^6.1.1",
+    "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
     "react": "^18.2.0",
