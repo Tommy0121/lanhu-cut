@@ -7,8 +7,32 @@
         "default_popup": "./dist/index.html",
         "default_icon": "logo.png"
     },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://lanhuapp.com/*"
+            ],
+            "js": [
+                "./dist/boot.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/dist/inject.js"
+            ],
+            "matches": [
+                "https://lanhuapp.com/*"
+            ]
+        }
+    ],
     "permissions": [
+        "activeTab",
         "management",
-        "scripting"
+        "scripting",
+        "webRequest",
+        "webRequestBlocking"
     ]
 }

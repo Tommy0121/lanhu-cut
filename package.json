@@ -6,7 +6,9 @@
   "author": "tommyxia",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack serve --config ./config/webpack.config.js"
+    "dev": "webpack serve --config ./config/webpack.config.js",
+    "build": "webpack --config ./config/webpack.config.js",
+    "clean": "node ./config/clean.js"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.22.15",
