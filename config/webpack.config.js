@@ -2,7 +2,7 @@
  * @Author: tommyxia 709177815@qq.com
  * @Date: 2023-10-19 10:00:50
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-11-14 16:13:33
+ * @LastEditTime: 2023-11-15 14:18:32
  * @FilePath: /chrome-extension/config/webpack.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -13,10 +13,10 @@ const clean = require('./clean')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const Dotenv = require('dotenv-webpack');
 clean()
 
 const isProduction = process.env.NODE_ENV === 'production'
-
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader'
 
 const config = {
@@ -28,11 +28,9 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html'
-    })
-
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+      template: './public/index.html',
+      excludeChunks: ['boot', 'inject']
+    }),
   ],
   module: {
     rules: [
@@ -85,8 +83,16 @@ module.exports = () => {
     config.mode = 'production'
 
     config.plugins.push(new MiniCssExtractPlugin())
+    config.plugins.push(
+      new Dotenv({
+        path: './.env.production',
+      }))
   } else {
     config.mode = 'development'
+    config.plugins.push(
+      new Dotenv({
+        path: './.env.dev',
+      }))
   }
   return config
 }

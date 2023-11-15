@@ -6,8 +6,8 @@
   "author": "tommyxia",
   "license": "MIT",
   "scripts": {
-    "dev": "webpack serve --config ./config/webpack.config.js",
-    "build": "webpack --config ./config/webpack.config.js",
+    "dev": "NODE_ENV=development webpack serve --config ./config/webpack.config.js",
+    "build": "NODE_ENV=production webpack --config ./config/webpack.config.js",
     "clean": "node ./config/clean.js"
   },
   "devDependencies": {
@@ -19,10 +19,13 @@
     "@webpack-cli/generators": "^3.0.7",
     "autoprefixer": "^10.4.16",
     "css-loader": "^6.8.1",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.0.1",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^39.1.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.33.2",
     "html-webpack-plugin": "^5.5.3",

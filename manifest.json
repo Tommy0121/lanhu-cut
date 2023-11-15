@@ -32,6 +32,7 @@
         "management",
         "scripting",
         "webRequest",
-        "webRequestBlocking"
+        "webRequestBlocking",
+        "storage"
     ]
 }
