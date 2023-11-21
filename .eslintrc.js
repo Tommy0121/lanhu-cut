@@ -2,7 +2,7 @@
  * @Author: tommyxia 709177815@qq.com
  * @Date: 2023-10-20 19:10:35
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-11-15 17:23:00
+ * @LastEditTime: 2023-11-21 09:54:55
  * @FilePath: /chrome-extension/.eslintrc.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -41,6 +41,7 @@ module.exports = {
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
-        "@typescript-eslint/no-unused-vars":1
+        "@typescript-eslint/no-unused-vars":1,
+        "@typescript-eslint/consistent-type-definitions":[1,"type"]
     }
 }
