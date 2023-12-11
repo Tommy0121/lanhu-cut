@@ -27,6 +27,10 @@
             ]
         }
     ],
+    "background": {
+        "service_worker": "./dist/background.js",
+        "type": "module"
+    },
     "permissions": [
         "activeTab",
         "management",
