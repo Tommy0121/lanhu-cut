@@ -1,21 +1,18 @@
 /*
  * @Date: 2023-11-15 15:29:05
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-11-21 10:17:57
+ * @LastEditTime: 2023-12-11 17:26:27
  * @FilePath: /chrome-extension/src/components/TokenForm.tsx
  */
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { RepoContext, type RepoInfo } from '@/hooks/useRepoInfoContext';
-const tempRepoInfo: RepoInfo = {
-  token: '',
-  domain: '',
-};
 
 const TokenForm = (): React.JSX.Element | null => {
   const { repoInfo, saveRepoInfo } = useContext(RepoContext);
+  const tempRepoInfo = useRef<RepoInfo>(repoInfo);
   const handleSaveRepoInfo = (): void => {
-    saveRepoInfo(tempRepoInfo);
+    saveRepoInfo(tempRepoInfo.current);
   };
   return (
     <div>
@@ -30,9 +27,9 @@ const TokenForm = (): React.JSX.Element | null => {
       >
         <div>
           <TextField
+            key={repoInfo.token}
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              // setRepoInfo({ ...repoInfo, token: e.target.value });
-              tempRepoInfo.token = e.target.value;
+              tempRepoInfo.current.token = e.target.value;
             }}
             defaultValue={repoInfo.token}
             label="token"
@@ -42,13 +39,24 @@ const TokenForm = (): React.JSX.Element | null => {
         </div>
         <div>
           <TextField
+            key={repoInfo.domain}
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-              // setRepoInfo({ ...repoInfo, domain: e.target.value });
-              tempRepoInfo.domain = e.target.value;
+              tempRepoInfo.current.domain = e.target.value;
             }}
             defaultValue={repoInfo.domain}
             label="域名"
             placeholder="请输入Gitlab 域名"
+          />
+        </div>
+        <div>
+          <TextField
+            key={repoInfo.projectId}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              tempRepoInfo.current.projectId = e.target.value;
+            }}
+            defaultValue={repoInfo.projectId}
+            label="图库项目Id"
+            placeholder="请输入图库项目Id"
           />
         </div>
         <Button type="button" variant="contained" onClick={handleSaveRepoInfo}>

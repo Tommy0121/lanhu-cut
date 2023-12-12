@@ -2,7 +2,7 @@
  * @Author: tommyxia 709177815@qq.com
  * @Date: 2023-10-19 10:00:50
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-04 11:20:07
+ * @LastEditTime: 2023-12-11 09:58:23
  * @FilePath: /chrome-extension/config/webpack.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -20,7 +20,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader'
 
 const config = {
-  entry: { app: './src/index.tsx', boot: './src/boot.ts', inject: './src/inject.ts',background:'./src/background.ts' },
+  entry: { app: './src/index.tsx', boot: './src/boot.ts', inject: './src/inject.ts', background: './src/background.ts' },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '',
@@ -29,7 +29,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      excludeChunks: ['boot', 'inject']
+      excludeChunks: ['boot', 'inject', 'background']
     }),
   ],
   module: {

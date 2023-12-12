@@ -1,0 +1,13 @@
+.check-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .check-exist-image {
+        cursor: pointer;
+        color: #3C84FF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

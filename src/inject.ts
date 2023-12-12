@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-11-10 13:36:31
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-04 10:59:10
+ * @LastEditTime: 2023-12-11 20:50:27
  * @FilePath: /chrome-extension/src/inject.ts
  */
 (function () {
@@ -15,7 +15,6 @@
       window.postMessage({
         type: 'intercept file',
         file: href,
-        // message: 'get file',
       });
       console.warn(filename, href);
       return false;

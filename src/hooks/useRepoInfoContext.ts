@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-11-20 20:15:01
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-11-21 10:17:44
+ * @LastEditTime: 2023-12-11 17:26:44
  * @FilePath: /chrome-extension/src/hooks/useRepoInfoContext.ts
  */
 import repoManagement from '@/utils/repoManagement';
@@ -9,6 +9,7 @@ import { createContext, useEffect, useState } from 'react';
 export type RepoInfo = {
   token: string;
   domain: string;
+  projectId: string;
 };
 type RepoContextParams = {
   repoInfo: RepoInfo;
@@ -16,7 +17,7 @@ type RepoContextParams = {
 };
 
 export const RepoContext = createContext<RepoContextParams>({
-  repoInfo: { token: '', domain: '' },
+  repoInfo: { token: '', domain: '', projectId: '' },
   saveRepoInfo: async () => {
     await Promise.resolve();
   },
@@ -27,7 +28,7 @@ const useRepoInfo = (): {
   RepoContext: React.Context<RepoContextParams>;
   saveRepoInfo: (value: RepoInfo) => Promise<void>;
 } => {
-  const [repoInfo, setRepoInfo] = useState({ token: '', domain: '' });
+  const [repoInfo, setRepoInfo] = useState({ token: '', domain: '', projectId: '' });
   useEffect(() => {
     repoManagement.getRepoInfo().then((res) => {
       setRepoInfo(res);
@@ -35,7 +36,6 @@ const useRepoInfo = (): {
   }, []);
 
   const saveRepoInfo = async (value: RepoInfo): Promise<void> => {
-    console.log('save', repoInfo);
     await repoManagement.setRepoInfo(value);
     const res = await repoManagement.refresh();
     setRepoInfo(res);
