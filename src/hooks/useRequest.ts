@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-12-11 10:59:58
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-11 20:40:15
+ * @LastEditTime: 2024-01-02 14:53:19
  * @FilePath: /chrome-extension/src/hooks/useRequest.ts
  */
 import { useEffect, useState } from 'react';
@@ -34,8 +34,11 @@ export default <T extends (...args: any) => Promise<any>>(
   useEffect(() => {
     if (!options?.manual) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      run(options?.params ? [...options.params] : undefined);
+      if (options?.params) {
+        run(...(options.params as Parameters<T>));
+      } else {
+        run(...([] as Parameters<T>));
+      }
     }
   }, []);
 

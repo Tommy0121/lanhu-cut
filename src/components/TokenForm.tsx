@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-11-15 15:29:05
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-11 17:26:27
+ * @LastEditTime: 2023-12-29 14:06:30
  * @FilePath: /chrome-extension/src/components/TokenForm.tsx
  */
 import React, { useContext, useRef } from 'react';
@@ -11,6 +11,7 @@ import { RepoContext, type RepoInfo } from '@/hooks/useRepoInfoContext';
 const TokenForm = (): React.JSX.Element | null => {
   const { repoInfo, saveRepoInfo } = useContext(RepoContext);
   const tempRepoInfo = useRef<RepoInfo>(repoInfo);
+  tempRepoInfo.current = repoInfo;
   const handleSaveRepoInfo = (): void => {
     saveRepoInfo(tempRepoInfo.current);
   };
@@ -60,7 +61,7 @@ const TokenForm = (): React.JSX.Element | null => {
           />
         </div>
         <Button type="button" variant="contained" onClick={handleSaveRepoInfo}>
-          提交
+          保存
         </Button>
       </Box>
     </div>

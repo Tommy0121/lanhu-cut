@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-11-20 20:36:07
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-11 17:17:15
+ * @LastEditTime: 2023-12-29 14:04:17
  * @FilePath: /chrome-extension/src/utils/repoManagement.ts
  */
 
@@ -41,7 +41,7 @@ class RepoManagement {
   };
 
   async refresh(): Promise<RepoInfo> {
-    const result = await chrome.storage.local.get([TokenKey, DomainKey]);
+    const result = await chrome.storage.local.get([TokenKey, DomainKey, projectIdKey]);
     this.repoInfo = {
       token: result[TokenKey],
       domain: result[DomainKey],

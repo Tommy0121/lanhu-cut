@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-12-11 10:14:52
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-11 20:49:55
+ * @LastEditTime: 2024-01-02 16:26:35
  * @FilePath: /chrome-extension/src/utils/request.ts
  */
 import repoManagement from '@/utils/repoManagement';
@@ -9,6 +9,7 @@ import repoManagement from '@/utils/repoManagement';
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 interface RequestOptions extends RequestInit {
   body?: any;
+  bodyInQuery?: boolean;
 }
 
 const getUrlParam = (obj: Record<string, any>): string => {
@@ -27,7 +28,7 @@ export default async (url: string, opt?: RequestOptions): Promise<any> => {
       .then((baseInfo) => {
         const { token, domain } = baseInfo;
         const options = { ...opt };
-        if (options?.method === 'GET') {
+        if (options?.bodyInQuery) {
           const query = getUrlParam(options.body);
           if (query) {
             url = `${url}?${query}`;
@@ -38,12 +39,19 @@ export default async (url: string, opt?: RequestOptions): Promise<any> => {
           reject(new Error('no gitlab token'));
         }
         fetch(`${domain}/api/v4${url}`, {
+          ...options,
+
           headers: {
             Authorization: `Bearer ${token}`,
+            ...(options.headers ? { ...options.headers } : {}),
           },
-          ...options,
         })
-          .then(async (res) => await res.json())
+          .then(async (res) => {
+            if (res.ok) {
+              return await res.json();
+            }
+            reject(res);
+          })
           .then((res) => {
             resolve(res);
           })
