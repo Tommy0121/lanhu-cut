@@ -1,25 +1,30 @@
 /*
  * @Date: 2023-11-15 15:29:05
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2023-12-29 14:06:30
+ * @LastEditTime: 2024-01-03 19:03:15
  * @FilePath: /chrome-extension/src/components/TokenForm.tsx
  */
-import React, { useContext, useRef } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import React, { useContext, useRef, useState } from 'react';
+import { Box, Button, TextField, Snackbar, Alert } from '@mui/material';
 import { RepoContext, type RepoInfo } from '@/hooks/useRepoInfoContext';
 
 const TokenForm = (): React.JSX.Element | null => {
   const { repoInfo, saveRepoInfo } = useContext(RepoContext);
   const tempRepoInfo = useRef<RepoInfo>(repoInfo);
+  const [open, setOpen] = useState(false);
   tempRepoInfo.current = repoInfo;
-  const handleSaveRepoInfo = (): void => {
-    saveRepoInfo(tempRepoInfo.current);
+  const handleSaveRepoInfo = async (): Promise<void> => {
+    await saveRepoInfo(tempRepoInfo.current);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <div>
       <Box
         sx={{
-          '& .MuiTextField-root': { m: 2 },
+          '& .MuiTextField-root': { m: 2, width: '280px' },
           '& .MuiButtonBase-root': { m: 2 },
         }}
         component={'form'}
@@ -60,10 +65,32 @@ const TokenForm = (): React.JSX.Element | null => {
             placeholder="请输入图库项目Id"
           />
         </div>
+        <div>
+          <TextField
+            key={repoInfo.baseOSSUrl}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              tempRepoInfo.current.baseOSSUrl = e.target.value;
+            }}
+            defaultValue={repoInfo.baseOSSUrl}
+            label="oss域名(如果有前缀路径也请带上)"
+            placeholder="请输入oss域名"
+          />
+        </div>
         <Button type="button" variant="contained" onClick={handleSaveRepoInfo}>
           保存
         </Button>
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={open}
+        onClose={handleClose}
+        message=""
+        key={'top' + 'center'}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          保存成功
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

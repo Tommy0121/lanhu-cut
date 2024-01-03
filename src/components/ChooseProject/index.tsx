@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-12-04 14:02:46
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2024-01-02 16:58:19
+ * @LastEditTime: 2024-01-03 20:18:59
  * @FilePath: /chrome-extension/src/components/ChooseProject/index.tsx
  */
 import React, {
@@ -77,7 +77,7 @@ const ChooseProject = (): ReactNode => {
       setShowedPreview({ ...showedPreview, [item.path]: !showedPreview[item.path] });
       return;
     }
-    const allFolderImage = (await getTree(repoInfo.projectId, item.path))
+    const allFolderImage = (await getRepositoryTree(repoInfo.projectId, item.path))
       .filter((item) => item.type === 'blob' && /\.(png|jpg)$/i.test(item.name))
       .map((item) => item.name);
     setFolderImageList({ ...folderImageList, [item.path]: allFolderImage });
@@ -85,6 +85,7 @@ const ChooseProject = (): ReactNode => {
   };
   const previewImageArea = (item: ResponseProject): ReactNode => {
     if (showedPreview[item.path]) {
+      console.log(folderImageList);
       return (
         <>
           {folderImageList[item.path].map((image) => (
@@ -97,7 +98,6 @@ const ChooseProject = (): ReactNode => {
   };
 
   const handleSaveImage = async (): Promise<void> => {
-    console.log(selectFolder);
     if (selectFolder.length === 0) {
       return;
     }
@@ -114,9 +114,12 @@ const ChooseProject = (): ReactNode => {
         base64,
       );
       chrome.storage.local.set({ selectFolder });
+      // 先将master 合并到当前分支
       try {
+        // 再创建一个到master的mr
         createMergeRequest(repoInfo.projectId, email);
       } catch (error) {
+        // 无论是否成功，都不需要报错，失败了基本是已有merge request了
       } finally {
         setSaved(true);
       }
@@ -137,12 +140,12 @@ const ChooseProject = (): ReactNode => {
     selectFolder.map((item) => {
       return (
         <div key={item}>
-          <div>{`${commonImageOSSPrefix}/${item}/${fileName}`}</div>
+          <div>{`${repoInfo.baseOSSUrl}/${item}/${fileName}`}</div>
           <Button
             type="button"
             variant="contained"
             onClick={() => {
-              handleCopyLink(`${commonImageOSSPrefix}/${item}/${fileName}`);
+              handleCopyLink(`${repoInfo.baseOSSUrl}/${item}/${fileName}`);
             }}
           >
             复制
