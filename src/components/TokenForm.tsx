@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-11-15 15:29:05
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2024-01-03 19:03:15
+ * @LastEditTime: 2024-01-04 09:42:39
  * @FilePath: /chrome-extension/src/components/TokenForm.tsx
  */
 import React, { useContext, useRef, useState } from 'react';
@@ -17,7 +17,7 @@ const TokenForm = (): React.JSX.Element | null => {
     await saveRepoInfo(tempRepoInfo.current);
     setOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
   return (

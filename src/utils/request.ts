@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-12-11 10:14:52
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2024-01-02 16:26:35
+ * @LastEditTime: 2024-01-11 19:29:14
  * @FilePath: /chrome-extension/src/utils/request.ts
  */
 import repoManagement from '@/utils/repoManagement';
@@ -48,12 +48,10 @@ export default async (url: string, opt?: RequestOptions): Promise<any> => {
         })
           .then(async (res) => {
             if (res.ok) {
-              return await res.json();
+              resolve(await res.json());
+              return;
             }
             reject(res);
-          })
-          .then((res) => {
-            resolve(res);
           })
           .catch((e) => {
             reject(e);

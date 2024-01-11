@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-12-04 14:02:46
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2024-01-03 20:18:59
+ * @LastEditTime: 2024-01-05 14:45:09
  * @FilePath: /chrome-extension/src/components/ChooseProject/index.tsx
  */
 import React, {
@@ -27,7 +27,7 @@ import { KeyboardArrowDown } from '@mui/icons-material';
 import { RepoContext } from '@/hooks/useRepoInfoContext';
 import { createBranchIfNotExist } from './util';
 import { blobUrlToBase64 } from '@/utils/blob';
-import { baseFolderPath, commonImageOSSPrefix } from '@/utils/constants';
+import { baseFolderPath } from '@/utils/constants';
 
 const fileUrl = new URLSearchParams(window.location.search)?.get('file');
 const array = fileUrl?.split('/');
@@ -117,8 +117,9 @@ const ChooseProject = (): ReactNode => {
       // 先将master 合并到当前分支
       try {
         // 再创建一个到master的mr
-        createMergeRequest(repoInfo.projectId, email);
+        await createMergeRequest(repoInfo.projectId, email);
       } catch (error) {
+        console.log(error);
         // 无论是否成功，都不需要报错，失败了基本是已有merge request了
       } finally {
         setSaved(true);
@@ -135,7 +136,6 @@ const ChooseProject = (): ReactNode => {
   if (!repoInfo.projectId) {
     return null;
   }
-  // TODO 这里应该是根据特定的条件来决定具体的图片路径
   return saved ? (
     selectFolder.map((item) => {
       return (

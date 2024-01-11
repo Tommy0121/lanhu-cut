@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-12-11 10:26:06
  * @LastEditors: tommyxia 709177815@qq.com
- * @LastEditTime: 2024-01-02 16:46:23
+ * @LastEditTime: 2024-01-05 14:44:25
  * @FilePath: /chrome-extension/src/api/index.ts
  */
 import Request from '@/utils/request';
@@ -95,7 +95,8 @@ export const createMergeRequest = async (
   sourceBranch: string,
   targetBranch: string = 'master',
 ) => {
-  return await Request(`/projects/${projectId}/merge_requests`, {
+  // eslint-disable-next-line @typescript-eslint/return-await
+  return Request(`/projects/${projectId}/merge_requests`, {
     headers: {
       'Content-Type': 'application/json',
     },
